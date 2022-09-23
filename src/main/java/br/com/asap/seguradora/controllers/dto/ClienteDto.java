@@ -18,24 +18,22 @@ import lombok.NoArgsConstructor;
 public class ClienteDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	private ObjectId id;
-
 	@NotEmpty
 	@NotBlank
 	@NotNull
 	@ApiModelProperty(value = "Nome do cliente não pode ser vazio")
 	private String nome;
-	
+
 	@NotNull
 	@ApiModelProperty(value = "CPF do cliente não pode ser vazio")
 	private Long cpf;
-	
+
 	@NotEmpty
 	@NotBlank
 	@NotNull
 	@ApiModelProperty(value = "Cidade do cliente não pode ser vazio")
 	private String cidade;
-	
+
 	@NotEmpty
 	@NotBlank
 	@NotNull
@@ -43,7 +41,6 @@ public class ClienteDto implements Serializable {
 	private String uf;
 
 	public ClienteDto(Cliente cliente) {
-//		id = cliente.getId();
 		nome = cliente.getNome();
 		cpf = cliente.getCpf();
 		cidade = cliente.getCidade();
@@ -55,7 +52,6 @@ public class ClienteDto implements Serializable {
 	}
 
 	public Cliente toCliente() {
-//		return new Cliente(this.id, this.nome, this.cpf, this.cidade, this.uf);
 		return new Cliente(null, this.nome, this.cpf, this.cidade, this.uf);
 	}
 
