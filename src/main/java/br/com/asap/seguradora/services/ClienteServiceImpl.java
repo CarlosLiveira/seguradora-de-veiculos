@@ -50,7 +50,7 @@ public class ClienteServiceImpl implements ClienteService {
 		validaCPF.validaDuplicidadeDeCpf(form);
 
 		Cliente cliente = form.toCliente();
-		clienteRepository.findByCpf(cliente.getCpf());
+//		clienteRepository.findByCpf(cliente.getCpf());
 		clienteRepository.save(cliente);
 		return cliente.getId();
 	}

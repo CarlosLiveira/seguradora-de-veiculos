@@ -2,10 +2,6 @@ package br.com.asap.seguradora.controllers.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import org.bson.types.ObjectId;
 
 import br.com.asap.seguradora.documents.Cliente;
@@ -21,21 +17,9 @@ public class ClienteDtoOutput implements Serializable {
 
 	private ObjectId id;
 
-	@NotEmpty
-	@NotBlank
-	@NotNull
 	private String nome;
-	@NotEmpty
-	@NotBlank
-	@NotNull
 	private Long cpf;
-	@NotEmpty
-	@NotBlank
-	@NotNull
 	private String cidade;
-	@NotEmpty
-	@NotBlank
-	@NotNull
 	private String uf;
 
 	public ClienteDtoOutput(Cliente cliente) {

@@ -5,10 +5,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 
@@ -23,26 +19,12 @@ public class ConsultarApoliceDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ObjectId id;
-
 	private Integer numero;
-	
-	@NotNull
 	private LocalDate dataInicial;
-	
-	@NotNull
 	private LocalDate dataFinal;
-	
-	@NotNull
-	@NotBlank
-	@NotEmpty
 	private String placaDoVeiculo;
-	
-	@NotNull
 	private BigDecimal valor;
-	
-	@NotNull
 	private Cliente cliente;
-
 	private String vencimento;
 	private String prazo;
 

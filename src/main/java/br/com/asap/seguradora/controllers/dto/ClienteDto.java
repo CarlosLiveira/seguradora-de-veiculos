@@ -6,9 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
-
 import br.com.asap.seguradora.documents.Cliente;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,25 +18,32 @@ import lombok.NoArgsConstructor;
 public class ClienteDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private ObjectId id;
+//	private ObjectId id;
 
 	@NotEmpty
 	@NotBlank
 	@NotNull
+	@ApiModelProperty(value = "Nome do cliente não pode ser vazio")
 	private String nome;
+	
 	@NotNull
+	@ApiModelProperty(value = "CPF do cliente não pode ser vazio")
 	private Long cpf;
+	
 	@NotEmpty
 	@NotBlank
 	@NotNull
+	@ApiModelProperty(value = "Cidade do cliente não pode ser vazio")
 	private String cidade;
+	
 	@NotEmpty
 	@NotBlank
 	@NotNull
+	@ApiModelProperty(value = "UF do cliente não pode ser vazio")
 	private String uf;
 
 	public ClienteDto(Cliente cliente) {
-		id = cliente.getId();
+//		id = cliente.getId();
 		nome = cliente.getNome();
 		cpf = cliente.getCpf();
 		cidade = cliente.getCidade();
@@ -49,7 +55,8 @@ public class ClienteDto implements Serializable {
 	}
 
 	public Cliente toCliente() {
-		return new Cliente(this.id, this.nome, this.cpf, this.cidade, this.uf);
+//		return new Cliente(this.id, this.nome, this.cpf, this.cidade, this.uf);
+		return new Cliente(null, this.nome, this.cpf, this.cidade, this.uf);
 	}
 
 }
