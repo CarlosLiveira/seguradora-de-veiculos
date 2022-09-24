@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.asap.seguradora.controllers.dto.ApoliceDto;
 import br.com.asap.seguradora.controllers.dto.ApoliceDtoOutput;
 import br.com.asap.seguradora.services.ApoliceServiceImpl;
-import br.com.asap.seguradora.utils.ValidaObjId;
+import br.com.asap.seguradora.utils.ValidaDadosDeEntrada;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -37,7 +37,7 @@ public class ApoliceController {
 	ApoliceServiceImpl apoliceServiceImpl;
 
 	@Autowired
-	ValidaObjId validaObjId;
+	ValidaDadosDeEntrada validaDadosDeEntrada;
 
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de apólices")
@@ -48,7 +48,7 @@ public class ApoliceController {
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Retorna uma única apólice")
 	public ResponseEntity<ApoliceDtoOutput> findById(@PathVariable String id) {
-		ObjectId objId = validaObjId.validaObjIdApolice(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
 		return ResponseEntity.ok().body(apoliceServiceImpl.findById(objId));
 	}
 
@@ -63,7 +63,7 @@ public class ApoliceController {
 	@PutMapping(value = "/{id}")
 	@ApiOperation(value = "Atualiza uma apólice")
 	public ResponseEntity<ApoliceDto> update(@PathVariable String id, @RequestBody ApoliceDto form) {
-		ObjectId objId = validaObjId.validaObjIdApolice(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
 		ApoliceDto apoliceDto = apoliceServiceImpl.update(objId, form);
 		return ResponseEntity.ok(apoliceDto);
 	}
@@ -71,7 +71,7 @@ public class ApoliceController {
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "Deleta uma apólice")
 	public ResponseEntity<?> delete(@PathVariable String id) {
-		ObjectId objId = validaObjId.validaObjIdApolice(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
 		apoliceServiceImpl.delete(objId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

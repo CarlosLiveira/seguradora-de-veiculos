@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.asap.seguradora.controllers.dto.ClienteDto;
 import br.com.asap.seguradora.controllers.dto.ClienteDtoOutput;
 import br.com.asap.seguradora.services.ClienteServiceImpl;
-import br.com.asap.seguradora.utils.ValidaObjId;
+import br.com.asap.seguradora.utils.ValidaDadosDeEntrada;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -37,7 +37,7 @@ public class ClienteController {
 	private ClienteServiceImpl clienteServiceImpl;
 
 	@Autowired
-	private ValidaObjId validaObjId;
+	private ValidaDadosDeEntrada validaDadosDeEntrada;
 
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de clientes")
@@ -49,7 +49,7 @@ public class ClienteController {
 	@ApiOperation(value = "Retorna um único cliente")
 	public ResponseEntity<ClienteDtoOutput> findById(@PathVariable String id) {
 		// valida se o id é do tipo ObjectId
-		ObjectId objId = validaObjId.validaObjIdCliente(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
 		return ResponseEntity.ok().body(clienteServiceImpl.findById(objId));
 	}
 
@@ -64,7 +64,7 @@ public class ClienteController {
 	@PutMapping(value = "/{id}")
 	@ApiOperation(value = "Atualiza um cliente")
 	public ResponseEntity<ClienteDto> update(@PathVariable String id, @RequestBody @Valid ClienteDto form) {
-		ObjectId objId = validaObjId.validaObjIdCliente(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
 		ClienteDto clienteDto = clienteServiceImpl.update(objId, form);
 		return ResponseEntity.ok(clienteDto);
 	}
@@ -72,7 +72,7 @@ public class ClienteController {
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "Deleta um cliente")
 	public ResponseEntity<?> delete(@PathVariable String id) {
-		ObjectId objId = validaObjId.validaObjIdCliente(id);
+		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
 		clienteServiceImpl.delete(objId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

@@ -19,6 +19,7 @@ public class Cliente implements Serializable {
 
 	@Id
 	private ObjectId id;
+
 	private String nome;
 	private Long cpf;
 	private String cidade;
@@ -30,5 +31,4 @@ public class Cliente implements Serializable {
 		this.cidade = cidade;
 		this.uf = uf;
 	}
-
 }

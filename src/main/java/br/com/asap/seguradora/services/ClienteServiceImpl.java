@@ -14,6 +14,7 @@ import br.com.asap.seguradora.documents.Apolice;
 import br.com.asap.seguradora.documents.Cliente;
 import br.com.asap.seguradora.repositories.ApoliceRepository;
 import br.com.asap.seguradora.repositories.ClienteRepository;
+import br.com.asap.seguradora.utils.ValidaDadosDeEntrada;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -25,7 +26,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private ApoliceRepository apoliceRepository;
 
 	@Autowired
-	private ValidaCPF validaCPF;
+	private ValidaDadosDeEntrada validaDadosDeEntrada;
 
 	@Override
 	public List<ClienteDtoOutput> findAll() {
@@ -45,9 +46,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ObjectId create(ClienteDto form) {
 		// valida se o número do cpf é válido
-		validaCPF.validaCpf(form);
+		validaDadosDeEntrada.validaCpf(form);
 		// valida se o cpf já consta no banco de dados
-		validaCPF.validaDuplicidadeDeCpf(form);
+		validaDadosDeEntrada.validaDuplicidadeDeCpf(form);
 
 		Cliente cliente = form.toCliente();
 		clienteRepository.save(cliente);
@@ -57,7 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ClienteDto update(ObjectId id, ClienteDto form) {
 
-		validaCPF.validaCpf(form);
+		validaDadosDeEntrada.validaCpf(form);
 
 		Cliente cliente = clienteRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Código do cliente inexistente: " + id));

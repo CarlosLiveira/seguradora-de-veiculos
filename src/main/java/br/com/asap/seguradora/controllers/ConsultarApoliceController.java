@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.asap.seguradora.controllers.dto.ConsultarApoliceDto;
 import br.com.asap.seguradora.services.ConsultarApoliceServiceImpl;
+import br.com.asap.seguradora.utils.ValidaDadosDeEntrada;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -23,10 +24,14 @@ public class ConsultarApoliceController {
 	@Autowired
 	ConsultarApoliceServiceImpl consultarApoliceServiceImpl;
 
+	@Autowired
+	ValidaDadosDeEntrada validaDadosDeEntrada;
+
 	@GetMapping(value = "/{numero}")
 	@ApiOperation(value = "Consulta uma apólice por número")
-	public ResponseEntity<ConsultarApoliceDto> findByApolice(@PathVariable Integer numero) {
-		return ResponseEntity.ok().body(consultarApoliceServiceImpl.findByApolice(numero));
+	public ResponseEntity<ConsultarApoliceDto> findByApolice(@PathVariable String numero) {
+		Integer obj = validaDadosDeEntrada.validaNumeroApolice(numero);
+		return ResponseEntity.ok().body(consultarApoliceServiceImpl.findByApolice(obj));
 	}
 
 }
