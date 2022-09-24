@@ -9,11 +9,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class Apolice implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,14 +32,8 @@ public class Apolice implements Serializable {
 	@DBRef
 	private Cliente cliente;
 
-	public Apolice(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Apolice(ObjectId id, Integer numero, LocalDate dataInicial, LocalDate dataFinal, String placaDoVeiculo,
-			BigDecimal valor, Cliente cliente) {
-		this.id = id;
-		this.numero = numero;
+	public Apolice(LocalDate dataInicial, LocalDate dataFinal, String placaDoVeiculo, BigDecimal valor,
+			Cliente cliente) {
 		this.dataInicial = dataInicial;
 		this.dataFinal = dataFinal;
 		this.placaDoVeiculo = placaDoVeiculo;

@@ -52,7 +52,7 @@ public class ClienteDto implements Serializable {
 	}
 
 	public Cliente toCliente() {
-		return new Cliente(null, this.nome, this.cpf, this.cidade, this.uf);
+		return new Cliente(this.nome, this.cpf, this.cidade, this.uf);
 	}
 
 }

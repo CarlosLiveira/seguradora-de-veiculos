@@ -23,7 +23,7 @@ public class ApoliceServiceImpl implements ApoliceService {
 
 	@Autowired
 	ApoliceRepository apoliceRepository;
-	
+
 	@Autowired
 	ClienteServiceImpl clienteServiceImpl;
 

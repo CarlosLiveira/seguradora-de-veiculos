@@ -24,4 +24,11 @@ public class Cliente implements Serializable {
 	private String cidade;
 	private String uf;
 
+	public Cliente(String nome, Long cpf, String cidade, String uf) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.cidade = cidade;
+		this.uf = uf;
+	}
+
 }

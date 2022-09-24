@@ -8,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
-
 import br.com.asap.seguradora.documents.Apolice;
 import br.com.asap.seguradora.documents.Cliente;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,11 +21,8 @@ import lombok.NoArgsConstructor;
 public class ApoliceDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "O código identificador da apólice é gerado automaticamente")
-	private ObjectId id;
-
-	@ApiModelProperty(value = "O número da apólice é gerado automaticamente")
-	private Integer numero;
+	@NotNull
+	private Cliente cliente;
 
 	@NotNull
 	@ApiModelProperty(value = "Data inicial da apólice não pode ser vazio")
@@ -47,17 +42,12 @@ public class ApoliceDto implements Serializable {
 	@ApiModelProperty(value = "O valor não pode ser vazio")
 	private BigDecimal valor;
 
-	@NotNull
-	private Cliente cliente;
-
 	public ApoliceDto(Apolice apolice) {
-		id = apolice.getId();
-		numero = apolice.getNumero();
+		cliente = apolice.getCliente();
 		dataInicial = apolice.getDataInicial();
 		dataFinal = apolice.getDataFinal();
 		placaDoVeiculo = apolice.getPlacaDoVeiculo();
 		valor = apolice.getValor();
-		cliente = apolice.getCliente();
 	}
 
 	public static ApoliceDto toApoliceDto(Apolice apolice) {
@@ -65,8 +55,7 @@ public class ApoliceDto implements Serializable {
 	}
 
 	public Apolice toApolice() {
-		return new Apolice(this.id, this.numero, this.dataInicial, this.dataFinal, this.placaDoVeiculo, this.valor,
-				this.cliente);
+		return new Apolice(this.dataInicial, this.dataFinal, this.placaDoVeiculo, this.valor, this.cliente);
 	}
 
 }
