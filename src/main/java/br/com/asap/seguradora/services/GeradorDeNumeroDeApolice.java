@@ -1,4 +1,4 @@
-package br.com.asap.seguradora.utils;
+package br.com.asap.seguradora.services;
 
 import java.util.Optional;
 import java.util.Random;

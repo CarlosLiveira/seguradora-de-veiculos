@@ -24,13 +24,10 @@ public class ConsultarApoliceController {
 	@Autowired
 	ConsultarApoliceServiceImpl consultarApoliceServiceImpl;
 
-	@Autowired
-	ValidaDadosDeEntrada validaDadosDeEntrada;
-
 	@GetMapping(value = "/{numero}")
 	@ApiOperation(value = "Consulta uma apólice por número")
 	public ResponseEntity<ConsultarApoliceDto> findByApolice(@PathVariable String numero) {
-		Integer obj = validaDadosDeEntrada.validaNumeroApolice(numero);
+		Integer obj = ValidaDadosDeEntrada.validaNumeroApolice(numero);
 		return ResponseEntity.ok().body(consultarApoliceServiceImpl.findByApolice(obj));
 	}
 

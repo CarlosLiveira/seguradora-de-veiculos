@@ -36,9 +36,6 @@ public class ClienteController {
 	@Autowired
 	private ClienteServiceImpl clienteServiceImpl;
 
-	@Autowired
-	private ValidaDadosDeEntrada validaDadosDeEntrada;
-
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de clientes")
 	public ResponseEntity<List<ClienteDtoOutput>> findAll() {
@@ -49,7 +46,7 @@ public class ClienteController {
 	@ApiOperation(value = "Retorna um único cliente")
 	public ResponseEntity<ClienteDtoOutput> findById(@PathVariable String id) {
 		// valida se o id é do tipo ObjectId
-		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdCliente(id);
 		return ResponseEntity.ok().body(clienteServiceImpl.findById(objId));
 	}
 
@@ -64,7 +61,7 @@ public class ClienteController {
 	@PutMapping(value = "/{id}")
 	@ApiOperation(value = "Atualiza um cliente")
 	public ResponseEntity<ClienteDto> update(@PathVariable String id, @RequestBody @Valid ClienteDto form) {
-		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdCliente(id);
 		ClienteDto clienteDto = clienteServiceImpl.update(objId, form);
 		return ResponseEntity.ok(clienteDto);
 	}
@@ -72,7 +69,7 @@ public class ClienteController {
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "Deleta um cliente")
 	public ResponseEntity<?> delete(@PathVariable String id) {
-		ObjectId objId = validaDadosDeEntrada.validaObjIdCliente(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdCliente(id);
 		clienteServiceImpl.delete(objId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

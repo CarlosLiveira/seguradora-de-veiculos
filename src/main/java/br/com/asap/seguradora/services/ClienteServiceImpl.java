@@ -1,6 +1,7 @@
 package br.com.asap.seguradora.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.asap.seguradora.controllers.dto.ClienteDto;
 import br.com.asap.seguradora.controllers.dto.ClienteDtoOutput;
+import br.com.asap.seguradora.controllers.exceptions.EntityCpfDuplicado;
 import br.com.asap.seguradora.controllers.exceptions.EntityNotFoundException;
 import br.com.asap.seguradora.documents.Apolice;
 import br.com.asap.seguradora.documents.Cliente;
@@ -24,9 +26,6 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ApoliceRepository apoliceRepository;
-
-	@Autowired
-	private ValidaDadosDeEntrada validaDadosDeEntrada;
 
 	@Override
 	public List<ClienteDtoOutput> findAll() {
@@ -46,10 +45,9 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public ObjectId create(ClienteDto form) {
 		// valida se o número do cpf é válido
-		validaDadosDeEntrada.validaCpf(form);
+		ValidaDadosDeEntrada.validaCpf(form);
 		// valida se o cpf já consta no banco de dados
-		validaDadosDeEntrada.validaDuplicidadeDeCpf(form);
-
+		validaDuplicidadeDeCpf(form);
 		Cliente cliente = form.toCliente();
 		clienteRepository.save(cliente);
 		return cliente.getId();
@@ -57,9 +55,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public ClienteDto update(ObjectId id, ClienteDto form) {
-
-		validaDadosDeEntrada.validaCpf(form);
-
+		ValidaDadosDeEntrada.validaCpf(form);
 		Cliente cliente = clienteRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Código do cliente inexistente: " + id));
 		cliente.setNome(form.getNome());
@@ -79,6 +75,14 @@ public class ClienteServiceImpl implements ClienteService {
 		apoliceRepository.deleteAll(listApolices);
 		clienteRepository.deleteById(id);
 		return ClienteDto.toClienteDto(cliente);
+	}
+
+	// verifica duplicidade de cpf
+	public void validaDuplicidadeDeCpf(ClienteDto form) {
+		Optional<Cliente> cpf = clienteRepository.findByCpf(form.getCpf());
+		if (cpf.isPresent()) {
+			throw new EntityCpfDuplicado("CPF já possui cadastro: " + form.getCpf());
+		}
 	}
 
 }

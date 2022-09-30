@@ -36,9 +36,6 @@ public class ApoliceController {
 	@Autowired
 	ApoliceServiceImpl apoliceServiceImpl;
 
-	@Autowired
-	ValidaDadosDeEntrada validaDadosDeEntrada;
-
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de apólices")
 	public ResponseEntity<List<ApoliceDtoOutput>> findAll() {
@@ -48,7 +45,7 @@ public class ApoliceController {
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Retorna uma única apólice")
 	public ResponseEntity<ApoliceDtoOutput> findById(@PathVariable String id) {
-		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdApolice(id);
 		return ResponseEntity.ok().body(apoliceServiceImpl.findById(objId));
 	}
 
@@ -63,7 +60,7 @@ public class ApoliceController {
 	@PutMapping(value = "/{id}")
 	@ApiOperation(value = "Atualiza uma apólice")
 	public ResponseEntity<ApoliceDto> update(@PathVariable String id, @RequestBody ApoliceDto form) {
-		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdApolice(id);
 		ApoliceDto apoliceDto = apoliceServiceImpl.update(objId, form);
 		return ResponseEntity.ok(apoliceDto);
 	}
@@ -71,7 +68,7 @@ public class ApoliceController {
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "Deleta uma apólice")
 	public ResponseEntity<?> delete(@PathVariable String id) {
-		ObjectId objId = validaDadosDeEntrada.validaObjIdApolice(id);
+		ObjectId objId = ValidaDadosDeEntrada.validaObjIdApolice(id);
 		apoliceServiceImpl.delete(objId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

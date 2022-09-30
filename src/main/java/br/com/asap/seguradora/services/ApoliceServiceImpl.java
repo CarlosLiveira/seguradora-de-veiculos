@@ -13,19 +13,18 @@ import br.com.asap.seguradora.controllers.exceptions.EntityNotFoundException;
 import br.com.asap.seguradora.documents.Apolice;
 import br.com.asap.seguradora.documents.Cliente;
 import br.com.asap.seguradora.repositories.ApoliceRepository;
-import br.com.asap.seguradora.utils.GeradorDeNumeroDeApolice;
 
 @Service
 public class ApoliceServiceImpl implements ApoliceService {
 
 	@Autowired
-	GeradorDeNumeroDeApolice geradorDeNumeroDeApolice;
+	private GeradorDeNumeroDeApolice geradorDeNumeroDeApolice;
 
 	@Autowired
-	ApoliceRepository apoliceRepository;
+	private ApoliceRepository apoliceRepository;
 
 	@Autowired
-	ClienteServiceImpl clienteServiceImpl;
+	private ClienteServiceImpl clienteServiceImpl;
 
 	@Override
 	public List<ApoliceDtoOutput> findAll() {
